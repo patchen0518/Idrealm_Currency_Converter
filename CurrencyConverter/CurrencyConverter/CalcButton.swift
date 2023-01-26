@@ -32,17 +32,30 @@ enum CalcButton: String {
     var buttonColor: Color {
         switch self {
         case .divide, .multiply, .substract, .add, .equal:
-            return .blue
+            return Color(uiColor: UIColor(red: 0.29, green: 0.37, blue: 0.99, alpha: 1.00))
         case .clear, .percent, .back:
-            return Color(.lightGray)
+            return Color(uiColor: UIColor(red: 0.31, green: 0.31, blue: 0.37, alpha: 1.00))
         case .convert:
-            return Color(.systemYellow)
+            return Color(uiColor: UIColor(red: 1.00, green: 0.54, blue: 0.00, alpha: 1.00))
         default:
-            return Color(UIColor(red: 55/255.0, green: 55/255.0, blue: 55/255.0, alpha: 1))
+            return Color(UIColor(red: 0.18, green: 0.18, blue: 0.22, alpha: 1.00))
         }
     }
 }
 
 enum Operation {
     case add, substract, multiply, divide, none
+}
+
+enum flagConversion: String {
+    case usd = "🇺🇸 USD"
+    case twd = "🇹🇼 TWD"
+    case eur = "🇪🇺 EUR"
+    case jpy = "🇯🇵 JPY"
+    case cad = "🇨🇦 CAD"
+    case aud = "🇦🇺 AUD"
+    case hkd = "🇭🇰 HKD"
+    case cny = "🇨🇳 CNY"
+    case sgd = "🇸🇬 SGD"
+    case krw = "🇰🇷 KRW"
 }

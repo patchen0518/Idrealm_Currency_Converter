@@ -30,14 +30,17 @@ struct ButtonLayoutView: View {
                             Text(item.rawValue)
                                 .foregroundColor(Color.white)
                                 .font(.system(size: 48))
-                                .frame(width: (UIScreen.main.bounds.width - 60) / 4, height: (UIScreen.main.bounds.width - 120) / 4)
+                                .frame(maxWidth: (UIScreen.main.bounds.width - 60) / 4, maxHeight:(UIScreen.main.bounds.width - 60) / 4)
+//                                .frame(width: (UIScreen.main.bounds.width - 60) / 4, height: (UIScreen.main.bounds.width - 120) / 4)
                                 .background(item.buttonColor)
                                 .cornerRadius(24)
                         }
+                        .padding(4)
                     }
                 }
             }
         }
+        .padding(8)
     }
 }
 

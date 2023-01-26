@@ -10,13 +10,22 @@ import SwiftUI
 ///Conversation Logic
 class CurrencyApiManager: ObservableObject {
     
-    @Published var currentCountry = "USD"
-    @Published var otherCountry = "USD"
+    @Published var currentCountry = flagConversion.usd
+    @Published var otherCountry = flagConversion.twd
     @Published var convertedAmount = ""
     @Published var symbols = [String]()
-    @Published var showAlert = false
     
     
+    let popularCurrency = [flagConversion.usd,
+                           flagConversion.eur,
+                           flagConversion.jpy,
+                           flagConversion.twd,
+                           flagConversion.cad,
+                           flagConversion.aud,
+                           flagConversion.hkd,
+                           flagConversion.cny,
+                           flagConversion.sgd,
+                           flagConversion.krw]
     
     var semaphore = DispatchSemaphore (value: 1)
     let decodder = JSONDecoder()

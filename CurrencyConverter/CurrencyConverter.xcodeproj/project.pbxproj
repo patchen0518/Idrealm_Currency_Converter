@@ -77,10 +77,10 @@
 				6E58B1AD298219CB008B155C /* ConversionView.swift */,
 				6E58B1AF29821A7D008B155C /* CurrencyApiManager.swift */,
 				6E58B1B1298230DF008B155C /* SymbolData.swift */,
+				6EDF01212980D35C009EDF6B /* CalcButton.swift */,
 				6E169BE22954435000F11F0B /* Assets.xcassets */,
 				6E169BE42954435000F11F0B /* CurrencyConverter.entitlements */,
 				6E169BE52954435000F11F0B /* Preview Content */,
-				6EDF01212980D35C009EDF6B /* CalcButton.swift */,
 			);
 			path = CurrencyConverter;
 			sourceTree = "<group>";

@@ -19,22 +19,24 @@ struct ConversionView: View {
             VStack {
                 List {
                     Picker("Current currency", selection: $currencyObject.currentCountry) {
-                        ForEach(currencyObject.symbols.sorted(by: <), id: \.self) {symbol in
-                            Text("\(symbol)")
+                        ForEach(currencyObject.popularCurrency, id: \.self) {symbol in
+                            Text("\(symbol.rawValue)")
                         }
                     }
                     .pickerStyle(.automatic)
                     
                     Picker("Other currency", selection: $currencyObject.otherCountry) {
-                        ForEach(currencyObject.symbols.sorted(by: <), id: \.self) {symbol in
-                            Text("\(symbol)")
+                        ForEach(currencyObject.popularCurrency, id: \.self) {symbol in
+                            Text("\(symbol.rawValue)")
                         }
+//                        ForEach(currencyObject.symbols.sorted(by: <), id: \.self) {symbol in
+//                            Text("\(symbol)")
+//                        }
                     }
                     .pickerStyle(.automatic)
                     
                     Button {
                         currencyObject.convertCurrency(currencyAmount: calcLogic.currentValue)
-                        currencyObject.showAlert = true
                     } label: {
                         Text("Convert")
                     }
@@ -43,9 +45,6 @@ struct ConversionView: View {
                 }
             }
         }
-//        .confirmationDialog("Converted Result", isPresented: $currencyObject.showAlert) {
-//            Text("\(currencyObject.currentCountry) to \(currencyObject.otherCountry) is \(currencyObject.convertedAmount)")
-//        }
     }
 }
 

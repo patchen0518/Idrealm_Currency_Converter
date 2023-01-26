@@ -12,6 +12,7 @@ class CalculateLogic: ObservableObject {
     @Published var currentValue = "0"
     @Published var savedValue: Float = 0
     @Published var currentOp: Operation = .none
+    @Published var convertMenu: Bool = false
     @Published var isConvert: Bool = false
     
     @Published var savedData = UserDefaults.standard
@@ -72,7 +73,8 @@ class CalculateLogic: ObservableObject {
             savedValue = 0
         case .convert:
             savedValue = Float(currentValue) ?? 0
-            isConvert = true
+            convertMenu = true
+            //isConvert.toggle()
         default:
             if currentValue == "0" {
                 if button == .decimal {
