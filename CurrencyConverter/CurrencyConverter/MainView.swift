@@ -9,7 +9,10 @@ import SwiftUI
 
 struct MainView: View {
     
+    ///Calculator Object
     @StateObject var calcLogic: CalculateLogic = CalculateLogic()
+    ///Currency Logic Object
+    @StateObject var currencyObject: CurrencyApiManager = CurrencyApiManager()
     
     var body: some View {
         GeometryReader { proxy in
@@ -49,7 +52,16 @@ struct MainView: View {
             }
         }
         .sheet(isPresented: $calcLogic.isConvert) {
-            ConversionView()
+            ConversionView(currencyObject: currencyObject, calcLogic: calcLogic)
+        }
+        .task {
+            currencyObject.getSymbols()
+//            guard let data = calcLogic.savedData.object(forKey: "savedSymbol") as? [String] else {
+//                currencyObject.getSymbols()
+//                calcLogic.savedData.set(currencyObject.symbols, forKey: "savedSymbol")
+//                return
+//            }
+//            currencyObject.symbols = data
         }
     }
 }

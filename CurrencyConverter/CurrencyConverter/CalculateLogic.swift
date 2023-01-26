@@ -7,11 +7,14 @@
 
 import Foundation
 
+/// Calculator Logic
 class CalculateLogic: ObservableObject {
     @Published var currentValue = "0"
     @Published var savedValue: Float = 0
     @Published var currentOp: Operation = .none
     @Published var isConvert: Bool = false
+    
+    @Published var savedData = UserDefaults.standard
     
     func roundedValue(_ value: Float) -> Float {
         return round(value * 100) / 100

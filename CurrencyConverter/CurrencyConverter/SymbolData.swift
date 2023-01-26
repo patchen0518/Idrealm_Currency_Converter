@@ -7,15 +7,12 @@
 
 import Foundation
 
-struct SymbolData: Codable, Identifiable{
-    let id = UUID()
+struct SymbolData: Codable{
     let success: Bool
     //let symbols: [detailSymbol]
     let symbols: [String:String]
 }
 
-//struct detailSymbol: Codable, Identifiable {
-//    let id = UUID()
-//    let shortName : String
-//    let longName : String
-//}
+struct ConvertionRate: Codable {
+    let result: Double
+}
