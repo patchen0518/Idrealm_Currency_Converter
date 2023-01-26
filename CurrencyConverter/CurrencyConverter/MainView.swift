@@ -48,6 +48,9 @@ struct MainView: View {
                 }
             }
         }
+        .sheet(isPresented: $calcLogic.isConvert) {
+            ConversionView()
+        }
     }
 }
 

@@ -11,6 +11,11 @@ class CalculateLogic: ObservableObject {
     @Published var currentValue = "0"
     @Published var savedValue: Float = 0
     @Published var currentOp: Operation = .none
+    @Published var isConvert: Bool = false
+    
+    func roundedValue(_ value: Float) -> Float {
+        return round(value * 100) / 100
+    }
     
     func processCommand(button: CalcButton) {
         switch button {
@@ -37,26 +42,34 @@ class CalculateLogic: ObservableObject {
             let current = Float(currentValue) ?? 0
             switch currentOp {
             case .add:
-                currentValue = "\(savedValue + current)"
+                currentValue = "\(roundedValue(savedValue + current))"
                 savedValue = 0
             case .substract:
-                currentValue = "\(savedValue - current)"
+                currentValue = "\(roundedValue(savedValue - current))"
                 savedValue = 0
             case .multiply:
-                currentValue = "\(savedValue * current)"
+                currentValue = "\(roundedValue(savedValue * current))"
                 savedValue = 0
             case .divide:
-                currentValue = "\(round(Float(savedValue) / Float(current) * 100) / 100)"
+                currentValue = "\(roundedValue(Float(savedValue) / Float(current)))"
                 savedValue = 0
             case .none:
                 break
             }
         case .back:
-            currentValue.removeLast()
+            if currentValue == "0" {
+                break
+            } else if currentValue.count == 1 && currentValue != "0" {
+                currentValue = "0"
+            } else {
+                currentValue.removeLast()
+            }
         case .clear:
             currentValue = "0"
+            savedValue = 0
         case .convert:
             savedValue = Float(currentValue) ?? 0
+            isConvert = true
         default:
             if currentValue == "0" {
                 if button == .decimal {
