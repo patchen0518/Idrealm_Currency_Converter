@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ConversionView: View {
     
-    @ObservedObject var currencyObject: CurrencyApiManager
     @ObservedObject var calcLogic: CalculateLogic
     
     var body: some View {
@@ -18,30 +17,19 @@ struct ConversionView: View {
                 .ignoresSafeArea()
             VStack {
                 List {
-                    Picker("Current currency", selection: $currencyObject.currentCountry) {
-                        ForEach(currencyObject.popularCurrency, id: \.self) {symbol in
+                    Picker("Current currency", selection: $calcLogic.currentCountry) {
+                        ForEach(calcLogic.popularCurrency, id: \.self) {symbol in
                             Text("\(symbol.rawValue)")
                         }
                     }
                     .pickerStyle(.automatic)
                     
-                    Picker("Other currency", selection: $currencyObject.otherCountry) {
-                        ForEach(currencyObject.popularCurrency, id: \.self) {symbol in
+                    Picker("Other currency", selection: $calcLogic.otherCountry) {
+                        ForEach(calcLogic.popularCurrency, id: \.self) {symbol in
                             Text("\(symbol.rawValue)")
                         }
-//                        ForEach(currencyObject.symbols.sorted(by: <), id: \.self) {symbol in
-//                            Text("\(symbol)")
-//                        }
                     }
                     .pickerStyle(.automatic)
-                    
-                    Button {
-                        currencyObject.convertCurrency(currencyAmount: calcLogic.currentValue)
-                    } label: {
-                        Text("Convert")
-                    }
-                    
-                    Text("Convertion result: $\(currencyObject.convertedAmount) dollars")
                 }
             }
         }

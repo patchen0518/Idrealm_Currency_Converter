@@ -5,7 +5,7 @@
 //  Created by Patrick Chen on 2022/12/22.
 //
 
-import Foundation
+import SwiftUI
 
 /// Calculator Logic
 class CalculateLogic: ObservableObject {
@@ -13,9 +13,24 @@ class CalculateLogic: ObservableObject {
     @Published var savedValue: Float = 0
     @Published var currentOp: Operation = .none
     @Published var convertMenu: Bool = false
-    @Published var isConvert: Bool = false
+    
+    @Published var currentCountry = flagConversion.usd
+    @Published var otherCountry = flagConversion.twd
     
     @Published var savedData = UserDefaults.standard
+    
+    @StateObject var currencyApi = CurrencyApiManager()
+    
+    let popularCurrency = [flagConversion.usd,
+                           flagConversion.eur,
+                           flagConversion.jpy,
+                           flagConversion.twd,
+                           flagConversion.cad,
+                           flagConversion.aud,
+                           flagConversion.hkd,
+                           flagConversion.cny,
+                           flagConversion.sgd,
+                           flagConversion.krw]
     
     func roundedValue(_ value: Float) -> Float {
         return round(value * 100) / 100
@@ -73,8 +88,7 @@ class CalculateLogic: ObservableObject {
             savedValue = 0
         case .convert:
             savedValue = Float(currentValue) ?? 0
-            convertMenu = true
-            //isConvert.toggle()
+            currentValue = currencyApi.convertCurrency(currentCountry: currentCountry.rawValue, otherCountry: otherCountry.rawValue, currencyAmount: currentValue)
         default:
             if currentValue == "0" {
                 if button == .decimal {
