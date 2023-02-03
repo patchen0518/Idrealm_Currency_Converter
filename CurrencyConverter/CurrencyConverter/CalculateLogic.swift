@@ -17,9 +17,8 @@ class CalculateLogic: ObservableObject {
     @Published var currentCountry = flagConversion.usd
     @Published var otherCountry = flagConversion.twd
     
+    @Published var currencyApi = CurrencyApiManager()
     @Published var savedData = UserDefaults.standard
-    
-    @StateObject var currencyApi = CurrencyApiManager()
     
     let popularCurrency = [flagConversion.usd,
                            flagConversion.eur,
@@ -88,7 +87,10 @@ class CalculateLogic: ObservableObject {
             savedValue = 0
         case .convert:
             savedValue = Float(currentValue) ?? 0
-            currentValue = currencyApi.convertCurrency(currentCountry: currentCountry.rawValue, otherCountry: otherCountry.rawValue, currencyAmount: currentValue)
+            let currentCountry = String(currentCountry.rawValue.suffix(3)).lowercased()
+            let otherCountry = String(otherCountry.rawValue.suffix(3)).lowercased()
+            print("Current country: \(currentCountry), otherCountry: \(otherCountry)")
+            currentValue = currencyApi.convertCurrency(currentCountry: currentCountry, otherCountry: otherCountry, currencyAmount: currentValue)
         default:
             if currentValue == "0" {
                 if button == .decimal {

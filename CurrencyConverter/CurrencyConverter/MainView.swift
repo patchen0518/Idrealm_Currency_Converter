@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
+    //@ObservedObject var currencyApi: CurrencyApiManager
     ///Calculator Object
     @StateObject var calcLogic: CalculateLogic = CalculateLogic()
     

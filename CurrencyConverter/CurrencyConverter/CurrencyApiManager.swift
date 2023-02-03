@@ -20,6 +20,7 @@ class CurrencyApiManager: ObservableObject {
         var convertedAmount = "0"
         let curAmount = Float(currencyAmount) ?? 0
         let url = "https://api.apilayer.com/exchangerates_data/convert?to=\(otherCountry)&from=\(currentCountry)&amount=\(curAmount)"
+        print("\(url)")
         var request = URLRequest(url: URL(string: url)!,timeoutInterval: Double.infinity)
         request.httpMethod = "GET"
         request.addValue("s1bQ54D0VFsFqICQDQKitUmlWX6TAdWG", forHTTPHeaderField: "apikey")
