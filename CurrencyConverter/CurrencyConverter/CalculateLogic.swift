@@ -5,31 +5,16 @@
 //  Created by Patrick Chen on 2022/12/22.
 //
 
-import SwiftUI
+import Foundation
 
 /// Calculator Logic
 class CalculateLogic: ObservableObject {
     @Published var currentValue = "0"
     @Published var savedValue: Float = 0
     @Published var currentOp: Operation = .none
-    @Published var convertMenu: Bool = false
+    @Published var isConvert: Bool = false
     
-    @Published var currentCountry = flagConversion.usd
-    @Published var otherCountry = flagConversion.twd
-    
-    @Published var currencyApi = CurrencyApiManager()
     @Published var savedData = UserDefaults.standard
-    
-    let popularCurrency = [flagConversion.usd,
-                           flagConversion.eur,
-                           flagConversion.jpy,
-                           flagConversion.twd,
-                           flagConversion.cad,
-                           flagConversion.aud,
-                           flagConversion.hkd,
-                           flagConversion.cny,
-                           flagConversion.sgd,
-                           flagConversion.krw]
     
     func roundedValue(_ value: Float) -> Float {
         return round(value * 100) / 100
@@ -87,10 +72,7 @@ class CalculateLogic: ObservableObject {
             savedValue = 0
         case .convert:
             savedValue = Float(currentValue) ?? 0
-            let currentCountry = String(currentCountry.rawValue.suffix(3)).lowercased()
-            let otherCountry = String(otherCountry.rawValue.suffix(3)).lowercased()
-            print("Current country: \(currentCountry), otherCountry: \(otherCountry)")
-            currentValue = currencyApi.convertCurrency(currentCountry: currentCountry, otherCountry: otherCountry, currencyAmount: currentValue)
+            isConvert = true
         default:
             if currentValue == "0" {
                 if button == .decimal {

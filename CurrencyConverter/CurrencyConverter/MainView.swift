@@ -9,31 +9,19 @@ import SwiftUI
 
 struct MainView: View {
     
-    //@ObservedObject var currencyApi: CurrencyApiManager
     ///Calculator Object
     @StateObject var calcLogic: CalculateLogic = CalculateLogic()
+    ///Currency Logic Object
+    @StateObject var currencyObject: CurrencyApiManager = CurrencyApiManager()
     
     var body: some View {
         GeometryReader { proxy in
             ZStack {
-                //Color.black.edgesIgnoringSafeArea(.all)
-                Color(uiColor: UIColor(red: 0.09, green: 0.09, blue: 0.11, alpha: 1.00))
-                    .ignoresSafeArea()
+                Color.black.edgesIgnoringSafeArea(.all)
                 
                 VStack {
                     //Claculation Section
                         VStack {
-                            HStack {
-                                Button {
-                                    calcLogic.convertMenu = true
-                                } label: {
-                                    Text("\(calcLogic.currentCountry.rawValue)")
-                                        .font(.largeTitle)
-                                        .foregroundColor(Color.white.opacity(0.35))
-                                        .padding(.horizontal)
-                                }
-                                Spacer()
-                            }
                             HStack {
                                 Spacer()
                                 Text(String(calcLogic.savedValue))
@@ -51,6 +39,8 @@ struct MainView: View {
                             }
                             .padding(.horizontal)
                         }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.gray.opacity(0.4))
                         .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
                         .ignoresSafeArea()
                     
@@ -61,8 +51,17 @@ struct MainView: View {
                 }
             }
         }
-        .sheet(isPresented: $calcLogic.convertMenu) {
-            ConversionView(calcLogic: calcLogic)
+        .sheet(isPresented: $calcLogic.isConvert) {
+            ConversionView(currencyObject: currencyObject, calcLogic: calcLogic)
+        }
+        .task {
+            currencyObject.getSymbols()
+//            guard let data = calcLogic.savedData.object(forKey: "savedSymbol") as? [String] else {
+//                currencyObject.getSymbols()
+//                calcLogic.savedData.set(currencyObject.symbols, forKey: "savedSymbol")
+//                return
+//            }
+//            currencyObject.symbols = data
         }
     }
 }

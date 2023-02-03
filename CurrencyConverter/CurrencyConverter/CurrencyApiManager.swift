@@ -10,17 +10,21 @@ import SwiftUI
 ///Conversation Logic
 class CurrencyApiManager: ObservableObject {
     
+    @Published var currentCountry = "USD"
+    @Published var otherCountry = "USD"
+    @Published var convertedAmount = ""
     @Published var symbols = [String]()
+    @Published var showAlert = false
+    
+    
     
     var semaphore = DispatchSemaphore (value: 1)
     let decodder = JSONDecoder()
     
-    ///Country has to be like TWD, USD or EUR
-    func convertCurrency(currentCountry: String, otherCountry: String, currencyAmount: String) -> String{
-        var convertedAmount = "0"
+
+    func convertCurrency(currencyAmount: String){
         let curAmount = Float(currencyAmount) ?? 0
         let url = "https://api.apilayer.com/exchangerates_data/convert?to=\(otherCountry)&from=\(currentCountry)&amount=\(curAmount)"
-        print("\(url)")
         var request = URLRequest(url: URL(string: url)!,timeoutInterval: Double.infinity)
         request.httpMethod = "GET"
         request.addValue("s1bQ54D0VFsFqICQDQKitUmlWX6TAdWG", forHTTPHeaderField: "apikey")
@@ -33,9 +37,9 @@ class CurrencyApiManager: ObservableObject {
             do {
                 let result = try self.decodder.decode(ConvertionRate.self, from: data)
                 DispatchQueue.main.async {
-                    convertedAmount = String("\(round(result.result * 100)/100)")
+                    self.convertedAmount = String("\(round(result.result * 100)/100)")
                 }
-                print(convertedAmount)
+                print(self.convertedAmount)
             } catch {
                 print(error)
             }
@@ -44,8 +48,6 @@ class CurrencyApiManager: ObservableObject {
 
         task.resume()
         semaphore.wait()
-        
-        return convertedAmount
     }
     
     func getSymbols() {
@@ -65,6 +67,7 @@ class CurrencyApiManager: ObservableObject {
                     self.symbols = result.symbols.map({$0.0})
                 }
                 print(String(data: data, encoding: .utf8)!)
+                //print(self.$symbols.values)
             } catch {
                 print(error)
             }

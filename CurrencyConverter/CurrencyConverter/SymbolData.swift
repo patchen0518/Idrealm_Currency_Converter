@@ -9,6 +9,7 @@ import Foundation
 
 struct SymbolData: Codable{
     let success: Bool
+    //let symbols: [detailSymbol]
     let symbols: [String:String]
 }
 
